@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class RocketCD implements CommandExecutor {
     private Rocketspleef plugin;
-    public RocketCD(Rocketspleef plugin) {this.plugin= plugin;}
+    public RocketCD(Rocketspleef plugin) {this.plugin = plugin;}
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
