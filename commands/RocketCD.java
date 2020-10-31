@@ -16,7 +16,7 @@ public class RocketCD implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player && sender.isOp() && args.length != 1){
-            sender.sendMessage(ChatColor.LIGHT_PURPLE + "[RS]" + ChatColor.WHITE + "you are dumb set a thing");
+            sender.sendMessage(ChatColor.LIGHT_PURPLE + "[RS]" + ChatColor.WHITE + " you are dumb set a thing");
         } else {
             plugin.setAttackrate(Integer.parseInt(args[1]));
         }
