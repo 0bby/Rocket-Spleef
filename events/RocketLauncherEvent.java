@@ -33,7 +33,7 @@ public class RocketLauncherEvent implements Listener {
                     }
                     Long timer = (Long) plugin.getCooldown().get(p);
                     Long currenttime = System.currentTimeMillis();
-                    if (System.currentTimeMillis() >= timer + 2000) {
+                    if (System.currentTimeMillis() >= timer + 1000) {
                         //fireball
                         Location eye = p.getEyeLocation();
                         Location loc = eye.add(eye.getDirection().multiply(1.2));
