@@ -55,7 +55,6 @@ public class ItemManager {
 
     private static void createElytra() {
         ItemStack item = new ItemStack(Material.ELYTRA);
-        item.addUnsafeEnchantment(Enchantment.LUCK, 1);
         item.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
         //item naming and check for special shovel
         ItemMeta meta = item.getItemMeta();

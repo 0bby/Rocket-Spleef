@@ -20,7 +20,7 @@ import java.text.DecimalFormat;
 public class RocketLauncherEvent implements Listener {
 
     private Rocketspleef plugin;
-    public RocketLauncherEvent(Rocketspleef plugin) {this.plugin= plugin;}
+    public RocketLauncherEvent(Rocketspleef plugin) {this.plugin = plugin;}
 
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {
@@ -33,7 +33,7 @@ public class RocketLauncherEvent implements Listener {
                     }
                     Long timer = (Long) plugin.getCooldown().get(p);
                     Long currenttime = System.currentTimeMillis();
-                    if (System.currentTimeMillis() >= timer + 1000) {
+                    if (System.currentTimeMillis() >= timer + plugin.getAttackrate()) {
                         //fireball
                         Location eye = p.getEyeLocation();
                         Location loc = eye.add(eye.getDirection().multiply(1.2));
@@ -43,7 +43,7 @@ public class RocketLauncherEvent implements Listener {
                         plugin.getCooldown().put(p, System.currentTimeMillis());
                     } else {
                         DecimalFormat df = new DecimalFormat("#.#");
-                        Long cdtime = (2000-(currenttime-timer));
+                        Long cdtime = (plugin.getAttackrate()-(currenttime-timer));
                         Float cdtimefloat = (cdtime.floatValue())/1000;
                         String cdtimefloatformat = df.format(cdtimefloat);
                         p.sendMessage(ChatColor.LIGHT_PURPLE + "[RS] "+   ChatColor.GOLD + cdtimefloatformat + " seconds left");

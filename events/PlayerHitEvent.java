@@ -9,7 +9,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class PlayerHitEvent implements Listener {
 
     private Rocketspleef plugin;
-    public PlayerHitEvent(Rocketspleef plugin) {this.plugin= plugin;}
+    public PlayerHitEvent(Rocketspleef plugin) {this.plugin = plugin;}
 
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent e) {

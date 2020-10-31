@@ -24,7 +24,7 @@ import java.util.UUID;
 public class StartGame implements CommandExecutor {
 
     private Rocketspleef plugin;
-    public StartGame(Rocketspleef plugin) {this.plugin= plugin;}
+    public StartGame(Rocketspleef plugin) {this.plugin = plugin;}
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

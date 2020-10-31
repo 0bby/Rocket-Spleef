@@ -14,7 +14,7 @@ import org.bukkit.scheduler.BukkitTask;
 public class PlayerFallEvent implements Listener {
 
     private Rocketspleef plugin;
-    public PlayerFallEvent(Rocketspleef plugin) {this.plugin= plugin;}
+    public PlayerFallEvent(Rocketspleef plugin) {this.plugin = plugin;}
 
     @EventHandler
 

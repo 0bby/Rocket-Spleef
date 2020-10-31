@@ -1,5 +1,6 @@
 package me.obby.rocketspleef;
 
+import me.obby.rocketspleef.commands.RocketCD;
 import me.obby.rocketspleef.commands.SetSpawn;
 import me.obby.rocketspleef.commands.StartGame;
 import me.obby.rocketspleef.events.PlayerFallEvent;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +26,8 @@ public final class Rocketspleef extends JavaPlugin {
         // Plugin startup logic
         ItemManager.init();
         getCommand("start").setExecutor(new StartGame(this));
-        getCommand("rocketspleefspawn").setExecutor(new SetSpawn(this));
+        getCommand("arena").setExecutor(new SetSpawn(this));
+        getCommand("attackrate").setExecutor(new RocketCD(this));
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new RocketLauncherEvent(this), this);
         pm.registerEvents(new PlayerFallEvent(this), this);
@@ -69,6 +72,17 @@ public final class Rocketspleef extends JavaPlugin {
     private HashMap<Player, Player> attackhistory = new HashMap<Player, Player>();
     public HashMap<Player, Player> getAttackhistory() {
         return attackhistory;
+    }
+
+
+    //set rocket launcher cd
+    private Integer attackrate = 1000;
+    public Integer setAttackrate(Integer integer) {
+        attackrate = integer;
+        return attackrate;
+    }
+    public Integer getAttackrate() {
+        return attackrate;
     }
 
 
