@@ -76,9 +76,9 @@ public final class Rocketspleef extends JavaPlugin {
 
 
     //set rocket launcher cd
-    private Integer attackrate = 1000;
-    public Integer setAttackrate(Integer integer) {
-        attackrate = integer;
+    private static int attackrate = 1000;
+    public int setAttackrate(int i) {
+        attackrate = i;
         return attackrate;
     }
     public Integer getAttackrate() {
