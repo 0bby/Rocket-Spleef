@@ -19,22 +19,13 @@ public class PlayerFallEvent implements Listener {
     @EventHandler
 
     public void onCustomDeathEvent(PlayerMoveEvent e) {
-        Player p = e.getPlayer();
-        if(plugin.getAlive().contains(p)){
-            if(p.getLocation().getY() <= 90) {
-                plugin.getAlive().remove(p);
-                p.setGameMode(GameMode.SPECTATOR);
-                if (plugin.getAttackhistory().containsKey(p)){
-                    Bukkit.broadcastMessage(ChatColor.RED  + p.getDisplayName() + ChatColor.WHITE + " has been eliminated by " + ChatColor.DARK_RED + plugin.getAttackhistory().get(p.getPlayer()).getDisplayName());
-                } else {
-                    Bukkit.broadcastMessage(ChatColor.RED + p.getDisplayName() + ChatColor.WHITE  +" jumped off lmao");
-                }
-                if(plugin.getAlive().size() <= 1){
-                    Player winner = plugin.getAlive().get(0);
-                    Bukkit.broadcastMessage(ChatColor.GOLD + winner.getDisplayName() + ChatColor.WHITE + " has won the game");
+        if(plugin.getGamestate() == true) {
+            Player p = e.getPlayer();
+            if(plugin.getAlive().contains(p)){
+                if(p.getLocation().getY() <= 90) {
+                    plugin.kill(p);
                 }
             }
         }
-
     }
 }

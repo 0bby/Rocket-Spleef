@@ -1,6 +1,7 @@
 package me.obby.rocketspleef.events;
 
 import me.obby.rocketspleef.Rocketspleef;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +17,12 @@ public class PlayerHitEvent implements Listener {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
             Player victim = (Player) e.getEntity();
-            plugin.getAttackhistory().put(victim, damager);
+            if(plugin.checkGamestate() == true){
+                plugin.getAttackhistory().put(victim, damager);
+            } else {
+                damager.sendMessage(ChatColor.LIGHT_PURPLE +"[RS] " + ChatColor.WHITE + "You cannot hit this player!");
+                e.setCancelled(true);
+            }
         }
     }
 }
