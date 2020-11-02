@@ -23,6 +23,7 @@ public class SetSpawn implements CommandExecutor {
             Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "[RS] " + ChatColor.WHITE + "Spawn has been set");
             Location location = ((Player) sender).getLocation();
             plugin.setSpawn(location);
+            plugin.setDeathaxis(plugin.getSpawn().subtract(0, 60, 0));
         }
         return true;
     }

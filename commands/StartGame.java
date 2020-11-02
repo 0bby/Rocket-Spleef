@@ -2,9 +2,7 @@ package me.obby.rocketspleef.commands;
 
 import me.obby.rocketspleef.Rocketspleef;
 import me.obby.rocketspleef.items.ItemManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +28,7 @@ public class StartGame implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-            if(Bukkit.getOnlinePlayers().size() >= 2) {
+            if(Bukkit.getOnlinePlayers().size() >= 1) {
                 Player player = (Player) sender;
                 if (plugin.getAlive().size() <= 1 || sender.isOp()) {
                     //player is parsed to determine world for entity clearing
@@ -49,15 +49,19 @@ public class StartGame implements CommandExecutor {
             p.getInventory().addItem(ItemManager.rocketlauncher);
             p.getInventory().addItem(ItemManager.firework);
             p.getInventory().setChestplate(ItemManager.elytra);
+            p.setExp(0);
+            p.setFlying(false);
+
             for (PotionEffect effect : p.getActivePotionEffects()) {
                 p.removePotionEffect(effect.getType());
             }
             p.addPotionEffect((new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 255, false, false)));
             p.addPotionEffect((new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 255, false, false)));
-            p.setExp(0);
             p.teleport(plugin.getSpawn());
-            p.setFlying(false);
-            plugin.getAmmo().put(p, 3);
+            plugin.getAmmo().put(p, 1);
+            p.setLevel(plugin.getAmmo().get(p));
+            p.setGlowing(true);
+            plugin.getReloading().put(p, false);
         }
         plugin.everyoneAlive();
         //clearentities
@@ -67,10 +71,12 @@ public class StartGame implements CommandExecutor {
                 current.remove();
             }
         }
-        plugin.getXpdictionary().put(0, 0);
-        plugin.getXpdictionary().put(1, 7);
-        plugin.getXpdictionary().put(2, 27);
-        plugin.getXpdictionary().put(3, 40);
+        World world = player.getWorld();
+        world.setDifficulty(Difficulty.PEACEFUL);
+        world.setTime(1000);
+        world.setWeatherDuration(0);
+
+        plugin.setGamestate(true);
 
     }
 

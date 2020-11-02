@@ -28,26 +28,26 @@ public class RocketLauncherEvent implements Listener {
                 if (e.getItem() != null) {
                     if (e.getItem().getItemMeta().equals(ItemManager.rocketlauncher.getItemMeta())) {
                         Player p = e.getPlayer();
+                        if(plugin.getReloading().get(p) == false){
+                            plugin.getReloading().put(p, true);
+                            new BukkitRunnable() {
+                                public void run() {
+                                    if(!(plugin.getAmmo().get(p).equals(plugin.getMaxammo()))) {
+                                        plugin.getAmmo().put(p, plugin.getAmmo().get(p)+1);
+                                        p.setLevel(plugin.getAmmo().get(p));
+                                    } else {
+                                        this.cancel();
+                                        plugin.getReloading().put(p, false);
+                                    }
+
+                                }
+                            }.runTaskTimer(plugin, 20*(plugin.getAttackrate()), 20*(plugin.getAttackrate()));
+                        }
                         //shoot if they have ammo,
                         if (plugin.getAmmo().get(p) > 0) {
                             shootFireball(p);
-                            //if they had full ammo reload and run reload shit
-                            if(plugin.getAmmo().get(p) == plugin.getMaxammo()){
-                                plugin.getAmmo().put(p, plugin.getAmmo().get(p)-1);
-                                new BukkitRunnable() {
-                                    public void run() {
-                                        plugin.getAmmo().put(p, plugin.getAmmo().get(p)+1);
-                                        p.setExp(plugin.getXpdictionary().get(plugin.getAmmo().get(p)));
-                                        if(plugin.getAmmo().get(p).equals(plugin.getMaxammo())) {
-                                            this.cancel();
-                                        }
-                                    }
-                                }.runTaskTimer(plugin, 20*(plugin.getAttackrate()/1000), 20*(plugin.getAttackrate()/1000));
-                            } else {
-                                //else let the thing do its job
-                                plugin.getAmmo().put(p, plugin.getAmmo().get(p)-1);
-                            }
-                            //no ammo sadge
+                            plugin.getAmmo().put(p, plugin.getAmmo().get(p)-1);
+                            p.setLevel(plugin.getAmmo().get(p));
                         } else {
                             p.sendMessage(ChatColor.LIGHT_PURPLE + "[RS] " + ChatColor.WHITE + "Reloading...");
                         }
@@ -64,5 +64,6 @@ public class RocketLauncherEvent implements Listener {
         Fireball fireball = (Fireball) loc.getWorld().spawnEntity(loc, EntityType.FIREBALL);
         fireball.setVelocity(loc.getDirection().normalize().multiply(2));
         fireball.setShooter(p);
+        fireball.setIsIncendiary(false);
     }
 }

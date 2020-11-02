@@ -78,21 +78,23 @@ public final class Rocketspleef extends JavaPlugin {
         return spawn;
     }
 
+    private Location deathaxis;
+    public Location getDeathaxis() {
+        return deathaxis;
+    }
+    public Location setDeathaxis(Location location) {
+        deathaxis = location;
+        return deathaxis;
+    }
+
     //lastdamaged
     private HashMap<Player, Player> attackhistory = new HashMap<Player, Player>();
     public HashMap<Player, Player> getAttackhistory() {
         return attackhistory;
     }
 
-    //lastdamaged
-    public HashMap<Integer, Integer> xpdictionary = new HashMap<Integer, Integer>();
-    public HashMap<Integer, Integer> getXpdictionary() {
-        return xpdictionary;
-    }
-
-
     //set rocket launcher cd
-    private static int attackrate = 1000;
+    private static int attackrate = 2;
     public int getAttackrate() {
         return attackrate;
     }
@@ -100,18 +102,26 @@ public final class Rocketspleef extends JavaPlugin {
 
     //"kill" player
     public void kill(Player p) {
-        this.getAlive().remove(p);
-        p.setGameMode(GameMode.SPECTATOR);
-        if (this.getAttackhistory().containsKey(p)){
-            Bukkit.broadcastMessage(ChatColor.RED  + p.getDisplayName() + ChatColor.WHITE + " has been eliminated by " + ChatColor.DARK_RED + this.getAttackhistory().get(p.getPlayer()).getDisplayName());
+        if(this.getAlive().contains(p)){
+            this.getAlive().remove(p);
+            p.setGameMode(GameMode.SPECTATOR);
+            p.setGlowing(false);
+            if (this.getAttackhistory().containsKey(p)){
+                Bukkit.broadcastMessage(ChatColor.RED  + p.getDisplayName() + ChatColor.WHITE + " has been eliminated by " + ChatColor.DARK_RED + this.getAttackhistory().get(p.getPlayer()).getDisplayName());
+            } else {
+                Bukkit.broadcastMessage(ChatColor.RED + p.getDisplayName() + ChatColor.WHITE  +" jumped off lmao");
+            }
         } else {
-            Bukkit.broadcastMessage(ChatColor.RED + p.getDisplayName() + ChatColor.WHITE  +" jumped off lmao");
+            p.setGameMode(GameMode.SPECTATOR);
+            p.setGlowing(false);
         }
+
         // check how many players left when someone dies
         if(this.getAlive().size() == 1){
             Player winner = this.getAlive().get(0);
             Bukkit.broadcastMessage(ChatColor.GOLD + winner.getDisplayName() + ChatColor.WHITE + " has won the game");
-            this.kill(winner);
+            winner.setGameMode(GameMode.SPECTATOR);
+            winner.setGlowing(false);
         }
     }
 
@@ -132,6 +142,13 @@ public final class Rocketspleef extends JavaPlugin {
     //more efficient but doesnt check but doesnt have to
     public boolean getGamestate() {
         return gamestate;
+    }
+
+
+
+    private HashMap<Player, Boolean> reloading = new HashMap<Player, Boolean>();
+    public HashMap<Player, Boolean> getReloading() {
+        return reloading;
     }
 
 

@@ -22,7 +22,7 @@ public class PlayerFallEvent implements Listener {
         if(plugin.getGamestate() == true) {
             Player p = e.getPlayer();
             if(plugin.getAlive().contains(p)){
-                if(p.getLocation().getY() <= 90) {
+                if(p.getLocation().getY() <= plugin.getDeathaxis().getY()) {
                     plugin.kill(p);
                 }
             }
